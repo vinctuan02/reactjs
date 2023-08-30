@@ -4,6 +4,8 @@ import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
+import { handleLoginApi } from '../../services/userService';
+import {userLoginSuccess} from '../../store/actions/userActions'
 
 
 
@@ -13,6 +15,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
+            errMessage: ''
         }
     }
 
@@ -30,8 +33,30 @@ class Login extends Component {
         console.log(event.target.value)
     }
 
-    handleLogin = () => {
-        alert("hihi")
+    handleLogin = async () => {
+        this.setState ({
+            errMessage: ''
+        })
+        try {
+            let data = await handleLoginApi(this.state.username, this.state.password)
+            if(data && data.errCode !== 0){
+                this.setState({
+                    errMessage: data.message
+                })
+            }else{
+                this.props.userLoginSuccess(data.user)
+                console.log('Login sucsseeds....')
+            }
+        }catch(error){ 
+            if(error.response){
+                if(error.response.data){
+                    this.setState({
+                        errMessage: error.response.data.message
+                    })
+                }
+            }
+            console.log(this.state.errMessage)
+        } 
     }
 
     render() {
@@ -42,7 +67,7 @@ class Login extends Component {
                         <div className='login-content row'>
                             <div className='col-12 text-login'>Login</div>
                             <div className='col-12 form-group login-input'>
-                                <label>User name</label>
+                                <label>User Name</label>
                                 <input
                                     type='text' className='form-control' placeholder='Enter you User Name'
                                     value={this.state.username}
@@ -54,6 +79,9 @@ class Login extends Component {
                                 <input type='password' className='form-control' placeholder='Enter your Password' 
                                 onChange={(event) => this.handleOnChangeInputPassWord(event)}
                                 />
+                            </div>
+                            <div className='col-12' style={{color: 'red'}}>
+                                {this.state.errMessage}
                             </div>
                             <div className='col-12' >
                                 <button className='btn-login' onClick={()=> this.handleLogin()}>Login</button>
@@ -85,8 +113,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // userLoginFail: () => dispatch(actions.adminLoginFail()),
+        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
     };
 };
 
