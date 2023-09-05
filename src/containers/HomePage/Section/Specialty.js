@@ -24,14 +24,14 @@ class Specialty extends Component {
         }
 
         return (
-            <div className='section-specialty' >
-                <div className='specialty-container'>
-                    <div className='specialty-header'>
+            <div className='section-share section-specialty'>
+                <div className='section-container'>
+                    <div className='section-header'>
                         <span className='title-section'>Chuyên khoa phổ biến</span>
                         <button className='button-section'>Xem thêm</button>
                     </div>
 
-                    <div className='specialty-body'>
+                    <div className='section-body'>
                         <Slider {...settings}>
                             <div className='specialty-customize'>
                                 <div className='bg-image'>
