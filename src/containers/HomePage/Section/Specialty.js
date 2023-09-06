@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Specialty.scss'
 
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 
 import Slider from "react-slick"
 
-
-
-import specialtyImg from '../../../assets/specialty/co-xuong-khop.jpeg'
+// import specialtyImg from '../../../assets/specialty/co-xuong-khop.jpeg'
 
 class Specialty extends Component {
 
@@ -23,34 +21,28 @@ class Specialty extends Component {
 
                     <div className='section-body'>
                         <Slider {...this.props.settings}>
-                            <div className='specialty-customize'>
-                                <div className='bg-image section-specialty'>
-                                </div>
+                            <div className='section-customize'>
+                                <div className='bg-image section-specialty'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
-                            <div className='specialty-customize'>
-                                <div className='bg-image section-specialty'>
-                                </div>
+                            <div className='section-customize'>
+                                <div className='bg-image section-specialty'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
-                            <div className='specialty-customize'>
-                                <div className='bg-image section-specialty'>
-                                </div>
+                            <div className='section-customize'>
+                                <div className='bg-image section-specialty'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
-                            <div className='specialty-customize'>
-                                <div className='bg-image section-specialty'>
-                                </div>
+                            <div className='section-customize'>
+                                <div className='bg-image section-specialty'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
-                            <div className='specialty-customize'>
-                                <div className='bg-image section-specialty'>
-                                </div>
+                            <div className='section-customize'>
+                                <div className='bg-image section-specialty'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
-                            <div className='specialty-customize'>
-                                <div className='bg-image section-specialty'>
-                                </div>
+                            <div className='section-customize'>
+                                <div className='bg-image section-specialty'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
                         </Slider>
