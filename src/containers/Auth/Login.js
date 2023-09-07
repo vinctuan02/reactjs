@@ -5,7 +5,7 @@ import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
 import { handleLoginApi } from '../../services/userService';
-import {userLoginSuccess} from '../../store/actions/userActions'
+import { userLoginSuccess } from '../../store/actions/userActions'
 
 
 
@@ -34,29 +34,29 @@ class Login extends Component {
     }
 
     handleLogin = async () => {
-        this.setState ({
+        this.setState({
             errMessage: ''
         })
         try {
             let data = await handleLoginApi(this.state.username, this.state.password)
-            if(data && data.errCode !== 0){
+            if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message
                 })
-            }else{
-                this.props.userLoginSuccess(data.user)
+            } else {
+                this.props.userLoginSuccess(data.userData.user)
                 console.log('Login sucsseeds....')
             }
-        }catch(error){ 
-            if(error.response){
-                if(error.response.data){
+        } catch (error) {
+            if (error.response) {
+                if (error.response.data) {
                     this.setState({
                         errMessage: error.response.data.message
                     })
                 }
             }
             console.log(this.state.errMessage)
-        } 
+        }
     }
 
     render() {
@@ -76,15 +76,15 @@ class Login extends Component {
                             </div>
                             <div className='col-12 form-group login-input'>
                                 <label>Password</label>
-                                <input type='password' className='form-control' placeholder='Enter your Password' 
-                                onChange={(event) => this.handleOnChangeInputPassWord(event)}
+                                <input type='password' className='form-control' placeholder='Enter your Password'
+                                    onChange={(event) => this.handleOnChangeInputPassWord(event)}
                                 />
                             </div>
-                            <div className='col-12' style={{color: 'red'}}>
+                            <div className='col-12' style={{ color: 'red' }}>
                                 {this.state.errMessage}
                             </div>
                             <div className='col-12' >
-                                <button className='btn-login' onClick={()=> this.handleLogin()}>Login</button>
+                                <button className='btn-login' onClick={() => this.handleLogin()}>Login</button>
                             </div>
                             <div className='col-12'>
                                 <span className='forgot-password'>Forgot your password</span>
@@ -106,7 +106,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language
+        language: state.app.language,
+        // user: state.user.user
     };
 };
 
@@ -114,7 +115,7 @@ const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
         // userLoginFail: () => dispatch(actions.adminLoginFail()),
-        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
+        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo))
     };
 };
 
