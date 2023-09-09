@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
+import * as action from '../../../store/actions'
+import './UserRedux.scss'
 
 class UserRedux extends Component {
 
@@ -15,30 +17,39 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        try {
-            let res = await getAllCodeService('gender')
-            if (res && res.data) {
-                this.setState({
-                    genderArr: res.data
-                })
-            }
-        } catch (e) {
-            console.log(e)
-        }
+        this.props.getGenderStar()
+        // try {
+        //     let res = await getAllCodeService('gender')
+        //     let resPosition = await getAllCodeService('position')
+        //     let resRole = await getAllCodeService('role')
+
+        //     if (res && res.data && resPosition && resPosition.data && resRole && resRole.data) {
+        //         this.setState({
+        //             genderArr: res.data,
+        //             positionArr: resPosition.data,
+        //             roleArr: resRole.data
+        //         })
+        //     }
+
+        // } catch (e) {
+        //     console.log(e)
+        // }
     }
 
 
     render() {
-        console.log('check state userredux: ', this.state.genderArr)
+        console.log('check state userredux: ', this.state)
         let language = this.props.language
         let genders = this.state.genderArr
+        let positions = this.state.positionArr
+        let roles = this.state.roleArr
         return (
             <div className='user-redux-container'>
                 <div className='title'>User redux</div>
                 <div className='user-redux-body'>
                     <div className='container'>
                         <div className='row'>
-                            <div className='col-12'><FormattedMessage id="manage-user.user" /></div>
+                            <div className='col-12 header-redux' ><FormattedMessage id="manage-user.user" /></div>
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.email" /></label>
                                 <input className='form-control' type='email' />
@@ -80,22 +91,38 @@ class UserRedux extends Component {
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.position" /></label>
                                 <select className='form-control'>
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
+                                    {
+                                        positions && positions.length > 0 &&
+                                        positions.map((index, item) => {
+                                            return (
+                                                <option key={index}>
+                                                    {language === LANGUAGES.VI ? index.valueVi : index.valueEn}
+                                                </option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </div>
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.role" /></label>
                                 <select className='form-control'>
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
+                                    {
+                                        positions && positions.length > 0 &&
+                                        roles.map((index, item) => {
+                                            return (
+                                                <option key={index}>
+                                                    {language === LANGUAGES.VI ? index.valueVi : index.valueEn}
+                                                </option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </div>
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.image" /></label>
                                 <input className='form-control' type='text' />
                             </div>
-                            <div className='col-12'>
+                            <div className='col-12 button'>
                                 <button className='btn btn-primary'><FormattedMessage id="manage-user.save" /></button>
                             </div>
                         </div>
@@ -115,6 +142,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenderStar: () => dispatch(action.fetchGenderStart())
+        // processLogout: () => dispatch(actions.processLogout()),
+        // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
     };
 };
 
