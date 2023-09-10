@@ -7,8 +7,6 @@ import * as action from '../../../store/actions'
 import './UserRedux.scss'
 
 class UserRedux extends Component {
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -17,7 +15,9 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        this.props.getGenderStar()
+        console.log("componentdidmout")
+        this.props.getGenderStart()
+        // this.props.getRoleStart()
         // try {
         //     let res = await getAllCodeService('gender')
         //     let resPosition = await getAllCodeService('position')
@@ -36,11 +36,21 @@ class UserRedux extends Component {
         // }
     }
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (prevProps.genderRedux !== this.props.genderRedux || prevProps.roleRedux !== this.props.roleRedux) {
+    //         this.setState({
+    //             genderArr: this.props.genderRedux,
+    //             roleArr: this.props.roleRedux
+    //         })
+    //     }
+    // }
 
     render() {
+        console.log("render")
         console.log('check state userredux: ', this.state)
+        console.log('userredux, check props: ', this.props)
         let language = this.props.language
-        let genders = this.state.genderArr
+        let genders = this.props.genderRedux
         let positions = this.state.positionArr
         let roles = this.state.roleArr
         return (
@@ -107,11 +117,11 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id="manage-user.role" /></label>
                                 <select className='form-control'>
                                     {
-                                        positions && positions.length > 0 &&
-                                        roles.map((index, item) => {
+                                        roles && roles.length > 0 &&
+                                        roles.map((item, index) => {
                                             return (
                                                 <option key={index}>
-                                                    {language === LANGUAGES.VI ? index.valueVi : index.valueEn}
+                                                    {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             )
                                         })
@@ -135,14 +145,18 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log("adminAction, state of redux: ", state)
     return {
         language: state.app.language,
+        genderRedux: state.admin.genders,
+        roleRedux: state.admin.roles
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getGenderStar: () => dispatch(action.fetchGenderStart())
+        getGenderStart: () => dispatch(action.fetchGenderStart()),
+        getRoleStart: () => dispatch(action.fetchRoleStart())
         // processLogout: () => dispatch(actions.processLogout()),
         // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
     };
