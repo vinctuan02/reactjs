@@ -1,5 +1,5 @@
 import { escape } from 'lodash';
-import { getAllCodeService, createNewUserService } from '../../services/userService';
+import { getAllUsers, getAllCodeService, createNewUserService } from '../../services/userService';
 import actionTypes from './actionTypes';
 
 // export const fetchGenderStart = () => ({
@@ -36,7 +36,7 @@ export const fetchGenderFailed = () => ({
 export const fetchPositionStart = () => {
     return async (dispatch, getState) => {
         try {
-            dispatch({ type: actionTypes.FETCH_POSITION_START})
+            dispatch({ type: actionTypes.FETCH_POSITION_START })
             let res = await getAllCodeService('position')
             if (res && res.errCode === 0) {
                 dispatch(fetchPositionSuccess(res.data))
@@ -78,7 +78,6 @@ export const fetchRoleStart = () => {
     }
 }
 
-
 export const fetchRoleSuccess = (roleData) => ({
     type: actionTypes.FETCH_ROLE_SUCCESS,
     data: roleData
@@ -110,4 +109,32 @@ export const saveUserSuccess = () => ({
 })
 export const saveUserFailed = () => ({
     type: actionTypes.CREATE_USER_FAILED
+})
+
+
+
+export const fetchAllUserStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            // dispatch({ type: actionTypes.FETCH_ALL_USER_SUCCESS })
+            let res = await getAllUsers('ALL')
+            if (res && res.errCode === 0) {
+                console.log("case fetch adll users ")
+                dispatch(fetchAllUserSuccess(res.users))
+            } else {
+                dispatch(fetchAllUserFailed())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+}
+
+export const fetchAllUserSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_USER_SUCCESS,
+    users: data
+})
+export const fetchAllUserFailed = () => ({
+    type: actionTypes.FETCH_ALL_USER_FAILED
 })

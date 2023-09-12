@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getAllCodeService } from '../../../services/userService';
+// import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
 import * as action from '../../../store/actions'
 import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
+import TableManageUser from './TableManageUser';
+
+
 class UserRedux extends Component {
     constructor(props) {
         super(props)
@@ -16,7 +19,6 @@ class UserRedux extends Component {
             roleArr: [],
             previewImgULR: '',
             isOpen: false,
-
 
             email: '',
             password: '',
@@ -36,22 +38,6 @@ class UserRedux extends Component {
         this.props.getGenderStart()
         this.props.getRoleStart()
         this.props.getPositionStart()
-        // try {
-        //     let res = await getAllCodeService('gender')
-        //     let resPosition = await getAllCodeService('position')
-        //     let resRole = await getAllCodeService('role')
-
-        //     if (res && res.data && resPosition && resPosition.data && resRole && resRole.data) {
-        //         this.setState({
-        //             genderArr: res.data,
-        //             positionArr: resPosition.data,
-        //             roleArr: resRole.data
-        //         })
-        //     }
-
-        // } catch (e) {
-        //     console.log(e)
-        // }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -112,8 +98,18 @@ class UserRedux extends Component {
 
     handleSaveUser = () => {
         let isValid = this.checkValidateInput()
-        if(isValid === false) return
-        this.props.createNewUser({})
+        if (isValid === false) return
+        this.props.createNewUser({
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            address: this.state.address,
+            phonenumber: this.state.phoneNumber,
+            gender: this.state.gender,
+            roleId: this.state.role,
+            positionId: this.state.position
+        })
     }
 
     checkValidateInput = () => {
@@ -259,9 +255,16 @@ class UserRedux extends Component {
                                 ><FormattedMessage id="manage-user.save" />
                                 </button>
                             </div>
+                            <div className='col-12'>
+                                <TableManageUser />
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
                 {
                     this.state.isOpen === true &&
                     <Lightbox
