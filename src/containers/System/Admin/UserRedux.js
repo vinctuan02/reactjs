@@ -34,13 +34,14 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        console.log("componentdidmout")
+        // console.log("componentdidmout")
         this.props.getGenderStart()
         this.props.getRoleStart()
         this.props.getPositionStart()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log("did update")
         if (prevProps.genderRedux !== this.props.genderRedux) {
             let arrGenders = this.props.genderRedux
             this.setState({
@@ -62,6 +63,21 @@ class UserRedux extends Component {
             this.setState({
                 roleArr: arrRole,
                 role: arrRole && arrRole.length > 0 ? arrRole[0].key : ''
+            })
+        }
+
+        if (prevProps.listUsers !== this.props.listUsers) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                gender: '',
+                position: '',
+                role: '',
+                avatar: '',
             })
         }
 
@@ -110,6 +126,8 @@ class UserRedux extends Component {
             roleId: this.state.role,
             positionId: this.state.position
         })
+
+        // this.props.fetchUserRedux()
     }
 
     checkValidateInput = () => {
@@ -126,10 +144,9 @@ class UserRedux extends Component {
     }
 
     render() {
+        // console.log("render")
 
-        let { email, password, firstName, lastName, phoneNumber,
-            address, gender, position, role, avatar
-        } = this.state
+        let { email, password, firstName, lastName, phoneNumber, address, gender, position, role, avatar } = this.state
         let language = this.props.language
         let genders = this.props.genderRedux
         let positions = this.state.positionArr
@@ -262,9 +279,6 @@ class UserRedux extends Component {
                     </div>
                 </div>
 
-
-
-
                 {
                     this.state.isOpen === true &&
                     <Lightbox
@@ -278,23 +292,36 @@ class UserRedux extends Component {
 
 }
 
+
+// async componentDidMount() {
+//     console.log("componentdidmout")
+//     this.props.getGenderStart()
+//     this.props.getRoleStart()
+//     this.props.getPositionStart()
+// }
+
+
 const mapStateToProps = state => {
     // console.log("adminAction, state of redux: ", state)
+    // console.log("Mapstatetoprops")
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
         isLoadingGenderRedux: state.admin.isLoadingGender,
         positionsRedux: state.admin.positions,
         roleRedux: state.admin.roles,
+        listUsers: state.admin.users
     };
 };
 
 const mapDispatchToProps = dispatch => {
+    // console.log("MapdispatchToProps")
     return {
         getGenderStart: () => dispatch(action.fetchGenderStart()),
         getRoleStart: () => dispatch(action.fetchRoleStart()),
         getPositionStart: () => dispatch(action.fetchPositionStart()),
-        createNewUser: (data) => dispatch(action.createNewUser(data))
+        createNewUser: (data) => dispatch(action.createNewUser(data)),
+        // fetchUserRedux: () => dispatch(action.fetchAllUserStart())
         // processLogout: () => dispatch(actions.processLogout()),
         // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
     };

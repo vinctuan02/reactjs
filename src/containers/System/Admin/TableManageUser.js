@@ -30,8 +30,12 @@ class TableManagerUser extends Component {
         }
     }
 
+    handleDeleteUser(user) {
+        this.props.deleteUserRedux(user.id)
+    }
+
     render() {
-        console.log("check state: ", this.state)
+        // console.log("check state: ", this.state)
         let arrUsers = this.state.userRedux
         return (
             <table id='TableManagerUser' >
@@ -54,7 +58,10 @@ class TableManagerUser extends Component {
                                     <td>{item.address}</td>
                                     <td>
                                         <button className='btn-edit'><i className="fas fa-edit"></i></button>
-                                        <button className='btn-delete'><i className="fas fa-trash"></i></button>
+                                        <button
+                                            className='btn-delete'
+                                            onClick={() => this.handleDeleteUser(item)}
+                                        ><i className="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             )
@@ -75,7 +82,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUserRedux: () => dispatch(action.fetchAllUserStart())
+        fetchUserRedux: () => dispatch(action.fetchAllUserStart()),
+        deleteUserRedux: (data) => dispatch(action.deleteUser(data))
     };
 };
 

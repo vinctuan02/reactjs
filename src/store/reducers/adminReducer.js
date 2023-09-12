@@ -75,7 +75,7 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_ALL_USER_SUCCESS:
             // console.log("adminReducer, case FETCH_ROLE_FAILED: ", action)
-            console.log("actiontypes action: ", action)
+            // console.log("actiontypes action: ", action)
             state.users = action.users
             return {
                 ...state,
