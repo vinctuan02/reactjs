@@ -76,7 +76,7 @@ class TableManagerUser extends Component {
 
 const mapStateToProps = state => {
     return {
-        listUsers: state.admin.use
+        listUsers: state.admin.usessss
     };
 };
 
