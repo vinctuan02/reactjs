@@ -33,21 +33,20 @@ const adminReducer = (state = initialState, action) => {
             }
 
         case actionTypes.FETCH_POSITION_START:
-            // console.log("adminReducer, case FETCH_POSITON_START: ", action)
+            // console.log("adminReducer, case FETCH_ROLE_START: ", action)
             return {
                 ...state,
             }
 
-
         case actionTypes.FETCH_POSITION_SUCCESS:
-            // console.log("adminReducer, case FETCH_POSITON_SUCCESS: ", action)
+            // console.log("adminReducer, FETCH_ROLE_SUCCESS: ", action)
             state.positions = action.data
             return {
                 ...state,
             }
 
         case actionTypes.FETCH_POSITION_FAILED:
-            // console.log("adminReducer, case FETCH_POSITON_FAILED: ", action)
+            // console.log("adminReducer, case FETCH_ROLE_FAILED: ", action)
 
             return {
                 ...state,
@@ -62,6 +61,7 @@ const adminReducer = (state = initialState, action) => {
         case actionTypes.FETCH_ROLE_SUCCESS:
             // console.log("adminReducer, FETCH_ROLE_SUCCESS: ", action)
             state.roles = action.data
+            // console.log("state fetch role success", state)
             return {
                 ...state,
             }

@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 // import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES, CRUD_ACTION } from '../../../utils/constant';
+import CommonUtils from '../../../utils/CommonUtils';
 import * as action from '../../../store/actions'
 import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
@@ -30,34 +31,31 @@ class UserRedux extends Component {
             position: '',
             role: '',
             avatar: '',
+            userEditId: '',
             action: ''
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.props.getGenderStart()
-        this.props.getRoleStart()
         this.props.getPositionStart()
-        // console.log("componentDid mout() this.state: ", this.state)
-        // console.log("componentDid mout() this.props: ", this.props)
-
+        this.props.getRoleStart()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log("did update")
         if (prevProps.genderRedux !== this.props.genderRedux) {
-            let arrGenders = this.props.genderRedux
+            let arrGender = this.props.genderRedux
             this.setState({
-                genderArr: arrGenders,
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : ''
+                genderArr: arrGender,
+                gender: arrGender && arrGender.length > 0 ? arrGender[0].key : ''
             })
         }
 
-        if (prevProps.positionsRedux !== this.props.positionsRedux) {
-            let arrPositions = this.props.positionsRedux
+        if (prevProps.positionRedux !== this.props.positionRedux) {
+            let arrPosition = this.props.positionRedux
             this.setState({
-                positionArr: arrPositions,
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''
+                positionArr: arrPosition,
+                position: arrPosition && arrPosition.length > 0 ? arrPosition[0].key : ''
             })
         }
 
@@ -67,16 +65,12 @@ class UserRedux extends Component {
                 roleArr: arrRole,
                 role: arrRole && arrRole.length > 0 ? arrRole[0].key : ''
             })
-            // console.log("this.state: ", this.state)
         }
 
         if (prevProps.listUsers !== this.props.listUsers) {
-            // console.log('this.state: ', this.state)
-            // console.log("this.props: ", this.props)
-
-            let arrPositions = this.props.positionsRedux
-            let arrRole = this.props.roleRedux
             let arrGenders = this.props.genderRedux
+            let arrPositions = this.props.positionRedux
+            let arrRole = this.props.roleRedux
 
             this.setState({
                 email: '',
@@ -86,24 +80,25 @@ class UserRedux extends Component {
                 phoneNumber: '',
                 address: '',
                 avatar: '',
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '1',
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '1',
-                role: arrRole && arrRole.length > 0 ? arrRole[0].key : '1',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+                role: arrRole && arrRole.length > 0 ? arrRole[0].key : '',
                 action: CRUD_ACTION.CREATE
             })
         }
 
     }
 
-    handleOnchangeImage = (event) => {
-        console.log(event)
+    handleOnchangeImage = async (event) => {
         let data = event.target.files
         let file = data[0]
         if (file) {
+            let base64 = await CommonUtils.getBase64(file)
+            // console.log("test base64: ", base64)
             let objectUrl = URL.createObjectURL(file)
             this.setState({
                 previewImgULR: objectUrl,
-                avatar: file
+                avatar: base64
             })
         }
     }
@@ -115,7 +110,6 @@ class UserRedux extends Component {
     }
 
     onChangeInput = (event, id) => {
-        console.log(event.target.value)
         let copyState = { ...this.state }
         copyState[id] = event.target.value
         this.setState({
@@ -125,21 +119,46 @@ class UserRedux extends Component {
     }
 
     handleSaveUser = () => {
+        // console.log("handle Save user: ", this.state)
+        // console.log("handle user.gender: ", this.state.gender)
+        // console.log("handle user.position: ", this.state.position)
+        // console.log("handle user.role: ", this.state.role)
         let isValid = this.checkValidateInput()
-        if (isValid === false) return
-        this.props.createNewUser({
-            email: this.state.email,
-            password: this.state.password,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            address: this.state.address,
-            phonenumber: this.state.phoneNumber,
-            gender: this.state.gender,
-            roleId: this.state.role,
-            positionId: this.state.position
-        })
+        if (isValid === false) {
+            console.log("isValid === false")
+            return
+        }
 
-        // this.props.fetchUserRedux()
+        if (this.state.action === CRUD_ACTION.CREATE) {
+            this.props.createNewUser({
+                email: this.state.email,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                address: this.state.address,
+                phonenumber: this.state.phoneNumber,
+                gender: this.state.gender,
+                roleId: this.state.role,
+                positionId: this.state.position
+                // gender: 'gender',
+                // roleId: 'role',
+                // positionId: 'position'
+            })
+        }
+        if (this.state.action === CRUD_ACTION.EDIT) {
+            this.props.editUser({
+                id: this.state.userEditId,
+                email: this.state.email,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                address: this.state.address,
+                phonenumber: this.state.phoneNumber,
+                gender: this.state.gender,
+                roleId: this.state.role,
+                positionId: this.state.position
+            })
+        }
     }
 
     checkValidateInput = () => {
@@ -156,8 +175,9 @@ class UserRedux extends Component {
     }
 
     handleEditUserFromParent = (user) => {
-        console.log("check handle edituser from parent", user)
+        // console.log("check handle edituser from parent", user)
         this.setState({
+            userEditId: user.id,
             email: user.email,
             password: 'hashcode',
             firstName: user.firstName,
@@ -168,7 +188,7 @@ class UserRedux extends Component {
             position: user.positionId,
             role: user.roleId,
             avatar: '',
-            action: CRUD_ACTION.EDIT
+            action: CRUD_ACTION.EDIT,
         })
 
 
@@ -177,10 +197,9 @@ class UserRedux extends Component {
     render() {
         let { email, password, firstName, lastName, phoneNumber, address, gender, position, role, avatar } = this.state
         let language = this.props.language
-        let genders = this.props.genderRedux
-        let positions = this.props.positionsRedux
-        let roles = this.props.roleRedux
-        console.log("this.state: ", this.state)
+        let genders = this.state.genderArr
+        let positions = this.state.positionArr
+        let roles = this.state.roleArr
 
         // console.log("state render ", this.state)
         return (
@@ -195,6 +214,7 @@ class UserRedux extends Component {
                                 <input className='form-control' type='email'
                                     value={email}
                                     onChange={(event) => this.onChangeInput(event, 'email')}
+                                    disabled={this.state.action === CRUD_ACTION.EDIT}
                                 />
                             </div>
                             <div className='col-3'>
@@ -202,6 +222,7 @@ class UserRedux extends Component {
                                 <input className='form-control' type='password'
                                     value={password}
                                     onChange={(event) => this.onChangeInput(event, 'password')}
+                                    disabled={this.state.action === CRUD_ACTION.EDIT}
                                 />
                             </div>
                             <div className='col-3'>
@@ -236,6 +257,7 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id="manage-user.gender" /></label>
                                 <select className='form-control'
                                     onChange={(event) => this.onChangeInput(event, 'gender')}
+                                    value={gender}
                                 >
                                     {genders && genders.length > 0 &&
                                         genders.map((item, index) => {
@@ -252,6 +274,7 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id="manage-user.position" /></label>
                                 <select className='form-control'
                                     onChange={(event) => this.onChangeInput(event, 'position')}
+                                    value={position}
                                 >
                                     {
                                         positions && positions.length > 0 &&
@@ -269,6 +292,7 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id="manage-user.role" /></label>
                                 <select className='form-control'
                                     onChange={(event) => this.onChangeInput(event, 'role')}
+                                    value={role}
                                 >
                                     {
                                         roles && roles.length > 0 &&
@@ -301,7 +325,7 @@ class UserRedux extends Component {
                                     className={this.state.action === CRUD_ACTION.EDIT ? 'btn btn-warning' : 'btn btn-primary'}
                                     onClick={() => this.handleSaveUser()}
                                 >
-                                    <FormattedMessage id= {this.state.action === CRUD_ACTION.EDIT ? "manage-user.edit" : "manage-user.save"} />
+                                    <FormattedMessage id={this.state.action === CRUD_ACTION.EDIT ? "manage-user.edit" : "manage-user.save"} />
                                 </button>
                             </div>
                             <div className='col-12'>
@@ -327,14 +351,6 @@ class UserRedux extends Component {
 }
 
 
-// async componentDidMount() {
-//     console.log("componentdidmout")
-//     this.props.getGenderStart()
-//     this.props.getRoleStart()
-//     this.props.getPositionStart()
-// }
-
-
 const mapStateToProps = state => {
     // console.log("adminAction, state of redux: ", state)
     // console.log("Mapstatetoprops")
@@ -343,7 +359,7 @@ const mapStateToProps = state => {
         language: state.app.language,
         genderRedux: state.admin.genders,
         isLoadingGenderRedux: state.admin.isLoadingGender,
-        positionsRedux: state.admin.positions,
+        positionRedux: state.admin.positions,
         roleRedux: state.admin.roles,
         listUsers: state.admin.users
     };
@@ -353,9 +369,10 @@ const mapDispatchToProps = dispatch => {
     // console.log("MapdispatchToProps")
     return {
         getGenderStart: () => dispatch(action.fetchGenderStart()),
-        getRoleStart: () => dispatch(action.fetchRoleStart()),
         getPositionStart: () => dispatch(action.fetchPositionStart()),
+        getRoleStart: () => dispatch(action.fetchRoleStart()),
         createNewUser: (data) => dispatch(action.createNewUser(data)),
+        editUser: (data) => dispatch(action.editUser(data))
         // fetchUserRedux: () => dispatch(action.fetchAllUserStart())
         // processLogout: () => dispatch(actions.processLogout()),
         // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
