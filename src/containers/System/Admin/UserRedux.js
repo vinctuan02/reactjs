@@ -9,6 +9,8 @@ import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import TableManageUser from './TableManageUser';
+// require('buffer')
+
 
 
 class UserRedux extends Component {
@@ -32,7 +34,7 @@ class UserRedux extends Component {
             role: '',
             avatar: '',
             userEditId: '',
-            action: ''
+            action: '',
         }
     }
 
@@ -80,10 +82,11 @@ class UserRedux extends Component {
                 phoneNumber: '',
                 address: '',
                 avatar: '',
+                previewImgULR: '',
                 gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
                 position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
                 role: arrRole && arrRole.length > 0 ? arrRole[0].key : '',
-                action: CRUD_ACTION.CREATE
+                action: CRUD_ACTION.CREATE,
             })
         }
 
@@ -139,10 +142,8 @@ class UserRedux extends Component {
                 phonenumber: this.state.phoneNumber,
                 gender: this.state.gender,
                 roleId: this.state.role,
-                positionId: this.state.position
-                // gender: 'gender',
-                // roleId: 'role',
-                // positionId: 'position'
+                positionId: this.state.position,
+                avatar: this.state.avatar
             })
         }
         if (this.state.action === CRUD_ACTION.EDIT) {
@@ -156,7 +157,8 @@ class UserRedux extends Component {
                 phonenumber: this.state.phoneNumber,
                 gender: this.state.gender,
                 roleId: this.state.role,
-                positionId: this.state.position
+                positionId: this.state.position,
+                avatar: this.state.avatar
             })
         }
     }
@@ -174,8 +176,13 @@ class UserRedux extends Component {
         return isValidate
     }
 
-    handleEditUserFromParent = (user) => {
+    handleEditUserFromParent = async (user) => {
         // console.log("check handle edituser from parent", user)
+        let imageBase64 = ''
+        if (user.image) {
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary')
+        }
+
         this.setState({
             userEditId: user.id,
             email: user.email,
@@ -188,9 +195,10 @@ class UserRedux extends Component {
             position: user.positionId,
             role: user.roleId,
             avatar: '',
-            action: CRUD_ACTION.EDIT,
+            previewImgULR: imageBase64,
+            action: CRUD_ACTION.EDIT
         })
-
+        console.log(this.state)
 
     }
 
