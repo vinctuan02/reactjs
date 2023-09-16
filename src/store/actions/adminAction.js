@@ -1,5 +1,8 @@
 import { escape, reject } from 'lodash';
-import { getAllUsers, getAllCodeService, createNewUserService, deleteUserService, editUserService } from '../../services/userService';
+import {
+    getAllUsers, getAllCodeService, createNewUserService,
+    deleteUserService, editUserService, getTopDoctorService
+} from '../../services/userService';
 import actionTypes from './actionTypes';
 import { toast } from 'react-toastify';
 
@@ -128,6 +131,8 @@ export const fetchAllUserStart = () => {
         try {
             // dispatch({ type: actionTypes.FETCH_ALL_USER_SUCCESS })
             let res = await getAllUsers('ALL')
+            let res1 = await getTopDoctorService(2)
+            console.log('check res fetch all user: ', res1)
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUserSuccess(res.users.reverse()))
             } else {

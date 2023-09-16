@@ -8,6 +8,10 @@ const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`)
 }
 
+const getTopDoctorService = (limit) => {
+    return axios.get(`/api/top-doctor-home?id=${limit}`)
+}
+
 const createNewUserService = (data) => {
     return axios.post('/api/create-new-user', data)
 }
@@ -34,5 +38,6 @@ export {
     createNewUserService,
     deleteUserService,
     editUserService,
-    getAllCodeService
+    getAllCodeService,
+    getTopDoctorService
 }
