@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as action from '../../../store/actions'
 
 // import { FormattedMessage } from 'react-intl';
 
@@ -11,7 +12,12 @@ import Slider from "react-slick"
 
 class OutStandingDoctor extends Component {
 
+    componentDidMount() {
+        this.props.loadTopDoctor()
+    }
+
     render() {
+        console.log("test top doctors: ", this.props)
         return (
             <div className='section-share section-outstanding-doctor'>
                 <div className='section-container'>
@@ -101,12 +107,14 @@ class OutStandingDoctor extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        topDoctorsRedux: state.admin.topDoctors
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        loadTopDoctor: () => dispatch(action.fetchTopDoctor())
     };
 };
 

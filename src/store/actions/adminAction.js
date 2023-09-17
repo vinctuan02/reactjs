@@ -212,3 +212,30 @@ export const editUserSuccess = () => ({
 export const editUserFailed = () => ({
     type: actionTypes.EDIT_USER_FAILED
 })
+
+
+export const fetchTopDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            // dispatch({ type: actionTypes.FETCH_ALL_USER_SUCCESS })
+            let res = await getTopDoctorService(2)
+            console.log('check res fetch doctor: ', res)
+            if (res && res.errCode === 0) {
+                dispatch(fetchTopDoctorSuccess())
+            } else {
+                dispatch(fetchTopDoctorFailed())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+}
+
+export const fetchTopDoctorSuccess = (data) => ({
+    type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS,
+    dataDoctors: data
+})
+export const fetchTopDoctorFailed = () => ({
+    type: actionTypes.FETCH_TOP_DOCTOR_FAILED
+})

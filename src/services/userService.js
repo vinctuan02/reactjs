@@ -9,7 +9,8 @@ const getAllUsers = (inputId) => {
 }
 
 const getTopDoctorService = (limit) => {
-    return axios.get(`/api/top-doctor-home?id=${limit}`)
+    // console.log("test limit", limit)
+    return axios.get(`/api/top-doctor-home?limit=${limit}`)
 }
 
 const createNewUserService = (data) => {
