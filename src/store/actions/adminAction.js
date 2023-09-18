@@ -218,10 +218,10 @@ export const fetchTopDoctor = () => {
     return async (dispatch, getState) => {
         try {
             // dispatch({ type: actionTypes.FETCH_ALL_USER_SUCCESS })
-            let res = await getTopDoctorService(2)
-            console.log('check res fetch doctor: ', res)
+            let res = await getTopDoctorService(5)
+            // console.log('check res fetch doctor: ', res)
             if (res && res.errCode === 0) {
-                dispatch(fetchTopDoctorSuccess())
+                dispatch(fetchTopDoctorSuccess(res.data))
             } else {
                 dispatch(fetchTopDoctorFailed())
             }

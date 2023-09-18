@@ -43,6 +43,7 @@
     .section-body {
         .section-customize {
             text-align: center;
+
             .bg-image {
                 display: inline-block;
                 border-radius: 10px;
@@ -63,7 +64,7 @@
                 }
 
                 &.section-outstanding-doctor {
-                    background-image: url('../../assets/outstanding-doctor/anh-dai-dien-bs.png');
+                    // background-image: url('../../assets/outstanding-doctor/anh-dai-dien-bs.png');
                     width: 120px;
                     height: 120px;
                     border-radius: 50%;
@@ -169,7 +170,8 @@
 
         .content-right {
             width: 40%;
-            p{
+
+            p {
                 text-align: justify;
                 font-style: italic;
                 padding: 15px;
