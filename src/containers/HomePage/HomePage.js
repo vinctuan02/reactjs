@@ -19,7 +19,7 @@ class HomePage extends Component {
     render() {
         let settings = {
             dots: false,
-            ifninite: true,
+            ifninite: false,
             speed: 500,
             slidesToShow: 4,
             slidesToScroll: 2
@@ -28,12 +28,12 @@ class HomePage extends Component {
         return (
             <div>
                 <HomeHeader />
-                <Specialty settings = {settings}/>
-                <MedicalFacility settings = {settings}/>
-                <OutStandingDoctor settings = {settings}/>
-                <HandBook settings = {settings}/>
-                <About/>
-                <HomeFooter/>
+                <Specialty settings={settings} />
+                <MedicalFacility settings={settings} />
+                <OutStandingDoctor settings={settings} />
+                <HandBook settings={settings} />
+                <About />
+                <HomeFooter />
             </div>
         );
     }

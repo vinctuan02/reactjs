@@ -6,6 +6,7 @@ import { LANGUAGES } from '../../../utils/constant';
 // import { FormattedMessage } from 'react-intl';
 
 import Slider from "react-slick"
+import { FormattedMessage } from 'react-intl';
 
 
 
@@ -36,17 +37,17 @@ class OutStandingDoctor extends Component {
 
     render() {
         let arrDoctor = this.state.arrDoctor
-        let language = this.props
+        let { language } = this.props
         console.log("test language: ", language)
         console.log(LANGUAGES.VI, LANGUAGES.EN)
-        arrDoctor = arrDoctor.concat(arrDoctor).concat(arrDoctor)
+        // arrDoctor = arrDoctor.concat(arrDoctor).concat(arrDoctor)
         console.log('arrDoctor: ', arrDoctor)
         return (
             <div className='section-share section-outstanding-doctor'>
                 <div className='section-container'>
                     <div className='section-header'>
-                        <span className='title-section'>Bác sĩ nổi bật</span>
-                        <button className='button-section'>Xem thêm</button>
+                        <span className='title-section'><FormattedMessage id="homepage.oustanding-doctor" /></span>
+                        <button className='button-section'><FormattedMessage id="homepage.more-infor" /></button>
                     </div>
 
                     <div className='section-body'>
@@ -59,6 +60,8 @@ class OutStandingDoctor extends Component {
                                     }
                                     let nameVi = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`
                                     let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`
+                                    let email = item.email
+                                    console.log(item)
                                     return (
                                         <div className='section-customize' key={index}>
                                             <div className='customize-boder'>
@@ -70,12 +73,12 @@ class OutStandingDoctor extends Component {
                                                 </div>
                                                 <div className='position text-center'>
                                                     <div>
+
                                                         {
-                                                            language !== LANGUAGES.VI ? nameVi : nameEn
+                                                            language === LANGUAGES.VI ? nameVi : nameEn
                                                         }
                                                     </div>
-                                                    {/* <div>Cơ xương khớp 2</div> */}
-                                                    {/* <div>{nameVi}</div> */}
+                                                    <div>Cơ xương khớp</div>
                                                 </div>
                                             </div>
                                         </div>
