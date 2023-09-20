@@ -1,7 +1,8 @@
 import { escape, reject } from 'lodash';
 import {
     getAllUsers, getAllCodeService, createNewUserService,
-    deleteUserService, editUserService, getTopDoctorService
+    deleteUserService, editUserService, getTopDoctorService,
+    getAllDoctors
 } from '../../services/userService';
 import actionTypes from './actionTypes';
 import { toast } from 'react-toastify';
@@ -131,8 +132,6 @@ export const fetchAllUserStart = () => {
         try {
             // dispatch({ type: actionTypes.FETCH_ALL_USER_SUCCESS })
             let res = await getAllUsers('ALL')
-            let res1 = await getTopDoctorService(2)
-            console.log('check res fetch all user: ', res1)
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUserSuccess(res.users.reverse()))
             } else {
@@ -180,9 +179,6 @@ export const deleteUserSuccess = () => ({
 export const deleteUserFailed = () => ({
     type: actionTypes.DELETE_USER_FAILED
 })
-
-
-
 
 export const editUser = (data) => {
     return async (dispatch, getState) => {
@@ -238,4 +234,31 @@ export const fetchTopDoctorSuccess = (data) => ({
 })
 export const fetchTopDoctorFailed = () => ({
     type: actionTypes.FETCH_TOP_DOCTOR_FAILED
+})
+
+
+export const fetchAllDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors()
+            // console.log("fetch all user: ", res)
+            if (res && res.errCode === 0) {
+                console.log("rest === 0", res.data)
+                dispatch(fetchAllDoctorSuccess(res.data))
+            } else {
+                dispatch(fetchAllDoctorFailed())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+}
+
+export const fetchAllDoctorSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
+    dataDoctors: data,
+})
+export const fetchAllDoctorFailed = () => ({
+    type: actionTypes.FETCH_ALL_DOCTOR_FAILED
 })

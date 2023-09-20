@@ -12,6 +12,9 @@ const getTopDoctorService = (limit) => {
     // console.log("test limit", limit)
     return axios.get(`/api/top-doctor-home?limit=${limit}`)
 }
+const getAllDoctors = () => {
+    return axios.get(`/api/get-all-doctors`)
+}
 
 const createNewUserService = (data) => {
     return axios.post('/api/create-new-user', data)
@@ -40,5 +43,6 @@ export {
     deleteUserService,
     editUserService,
     getAllCodeService,
-    getTopDoctorService
+    getTopDoctorService,
+    getAllDoctors
 }
