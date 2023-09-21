@@ -2,7 +2,7 @@ import { escape, reject } from 'lodash';
 import {
     getAllUsers, getAllCodeService, createNewUserService,
     deleteUserService, editUserService, getTopDoctorService,
-    getAllDoctors
+    getAllDoctors, saveDetailInforDoctor
 } from '../../services/userService';
 import actionTypes from './actionTypes';
 import { toast } from 'react-toastify';
@@ -261,4 +261,32 @@ export const fetchAllDoctorSuccess = (data) => ({
 })
 export const fetchAllDoctorFailed = () => ({
     type: actionTypes.FETCH_ALL_DOCTOR_FAILED
+})
+
+export const saveDetailUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveDetailInforDoctor(data)
+            console.log("fetch all user: ", res)
+            if (res && res.errCode === 0) {
+                // console.log("rest === 0", res.data)
+                toast.success("Save detail doctor success")
+                dispatch(saveDetailUserSuccess())
+            } else {
+                toast.error("Save detail doctor failed")
+                dispatch(saveDetailUserFail())
+            }
+        } catch (e) {
+            toast.error("Save detail doctor failed")
+            console.log(e)
+        }
+
+    }
+}
+
+export const saveDetailUserSuccess = () => ({
+    type: actionTypes.SAVE_DETAIL_INFOR_DOCTOR_SUCCESS
+})
+export const saveDetailUserFail = () => ({
+    type: actionTypes.SAVE_DETAIL_INFOR_DOCTOR_FAILED
 })

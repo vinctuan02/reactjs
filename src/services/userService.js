@@ -36,6 +36,10 @@ const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData)
 }
 
+const saveDetailInforDoctor = (inputData) => {
+    return axios.post('/api/save-infor-doctor', inputData)
+}
+
 export {
     handleLoginApi,
     getAllUsers,
@@ -44,5 +48,6 @@ export {
     editUserService,
     getAllCodeService,
     getTopDoctorService,
-    getAllDoctors
+    getAllDoctors,
+    saveDetailInforDoctor
 }
