@@ -61,12 +61,13 @@ class ManageDoctor extends Component {
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
-            doctorId: this.state.selectedDoctor,
+            doctorId: this.state.selectedDoctor.value,
             // specialtyId: this.state.specialtyId
         })
     }
 
     handleChange = selectedDoctor => {
+        // console.log("hihihi")
         this.setState({ selectedDoctor });
         console.log(`Option selected:`, selectedDoctor);
     };
@@ -92,8 +93,11 @@ class ManageDoctor extends Component {
         return result
     }
 
+    test = () => {
+        console.log("this.state", this.state)
+    }
+
     render() {
-        // console.log("check state: ", this.state)
 
         return (
             <React.Fragment>
@@ -127,6 +131,11 @@ class ManageDoctor extends Component {
                         onClick={() => this.handleSaveContentMarkdown()}
                     >
                         Lưu thông tin
+                    </button>
+                    <button className='save-content-doctor'
+                        onClick={() => this.test()}
+                    >
+                        Test
                     </button>
                 </div>
             </React.Fragment>
