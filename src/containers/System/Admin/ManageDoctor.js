@@ -8,6 +8,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select'
 import { LANGUAGES } from '../../../utils/constant';
+import { getDetailInforDoctor } from '../../../services/userService';
 
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -22,12 +23,13 @@ class ManageDoctor extends Component {
             contentHTML: '',
             selectedDoctor: '',
             description: '',
-            listDoctors: ''
+            listDoctors: '',
+            hasOldData: false
         }
     }
 
     componentDidMount() {
-        console.log("dit mount")
+        // console.log("dit mount")
         this.props.fetchAllDoctorsRedux()
     }
 
@@ -66,10 +68,31 @@ class ManageDoctor extends Component {
         })
     }
 
-    handleChange = selectedDoctor => {
+    handleChangeSelect = async (selectedDoctor) => {
         // console.log("hihihi")
         this.setState({ selectedDoctor });
-        console.log(`Option selected:`, selectedDoctor);
+        let res = await getDetailInforDoctor(selectedDoctor.value)
+        console.log("test res: ", res)
+        if (res && res.errCode === 0 && res.data && res.data.Markdown &&
+            res.data.Markdown.contentHTML && res.data.Markdown.contentMarkdown &&
+            res.data.Markdown.description) {
+
+            let markdown = res.data.Markdown
+            this.setState({
+                contentHTML: markdown.contentHTML,
+                contentMarkdown: markdown.contentMarkdown,
+                description: markdown.description,
+                hasOldData: true
+            })
+        } else {
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                description: '',
+                hasOldData: false
+            })
+        }
+        // console.log(`Option selected:`, selectedDoctor);
     };
 
     handleOnChangeDesc = (event) => {
@@ -98,7 +121,7 @@ class ManageDoctor extends Component {
     }
 
     render() {
-
+        let { hasOldData } = this.state
         return (
             <React.Fragment>
                 <div className='manage-doctor-container'>
@@ -108,7 +131,7 @@ class ManageDoctor extends Component {
                             <label>Chọn bác sĩ </label>
                             <Select
                                 value={this.state.selectedDoctor}
-                                onChange={this.handleChange}
+                                onChange={this.handleChangeSelect}
                                 options={this.state.listDoctors}
                             />
                         </div>
@@ -116,9 +139,7 @@ class ManageDoctor extends Component {
                             <lable>Thông tin giới thiệu</lable>
                             <textarea className='form-control' rows='4'
                                 onChange={(event) => this.handleOnChangeDesc(event)}
-                                value={this.state.description}
-                            >
-                                Nguyen Van  Tuan
+                                value={this.state.description}>
                             </textarea>
                         </div>
                     </div>
@@ -126,20 +147,24 @@ class ManageDoctor extends Component {
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)}
                         onChange={this.handleEditorChange}
+                        value={this.state.contentMarkdown}
                     />
-                    <button className='save-content-doctor'
+
+                    <button
+                        className={hasOldData ? 'save-content-doctor' : 'create-content-doctor'}
                         onClick={() => this.handleSaveContentMarkdown()}
                     >
-                        Lưu thông tin
+                        {
+                            hasOldData ? <span>Lưu thông tin</span> : <span>Tạo thông tin</span>
+                        }
                     </button>
-                    <button className='save-content-doctor'
+                    {/* <button className='save-content-doctor'
                         onClick={() => this.test()}
                     >
                         Test
-                    </button>
+                    </button> */}
                 </div>
             </React.Fragment>
-
         );
     }
 

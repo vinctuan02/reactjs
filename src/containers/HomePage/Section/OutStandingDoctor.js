@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as action from '../../../store/actions'
 import { LANGUAGES } from '../../../utils/constant';
+import { withRouter } from 'react-router';
 
 // import { FormattedMessage } from 'react-intl';
 
@@ -35,6 +36,10 @@ class OutStandingDoctor extends Component {
         this.props.loadTopDoctor()
     }
 
+
+    handleViewDetailDoctor(doctor) {
+        this.props.history.push(`/detail-doctor/${doctor.id}`)
+    }
     render() {
         let arrDoctor = this.state.arrDoctor
         let { language } = this.props
@@ -59,11 +64,11 @@ class OutStandingDoctor extends Component {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('binary')
                                     }
                                     let nameVi = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`
-                                    let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`
-                                    let email = item.email
+                                    let nameEn = `${item.positionData.valueEn}, ${item.lastName} ${item.firstName}`
+                                    // let email = item.email
                                     console.log(item)
                                     return (
-                                        <div className='section-customize' key={index}>
+                                        <div className='section-customize' key={index} onClick={() => this.handleViewDetailDoctor(item)}>
                                             <div className='customize-boder'>
                                                 <div className='outer-bg'>
                                                     <div className='bg-image section-outstanding-doctor'
@@ -93,7 +98,6 @@ class OutStandingDoctor extends Component {
             </div>
         )
     }
-
 }
 
 const mapStateToProps = state => {
@@ -111,4 +115,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));
