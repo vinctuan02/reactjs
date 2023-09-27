@@ -44,6 +44,7 @@ class DetailDoctor extends Component {
         return (
             <React.Fragment>
                 <HomeHeader />
+                <div className='test'></div>
                 <div className='detail-doctor-container'>
                     <div className='intro-doctor'>
                         <div className='content-left'>

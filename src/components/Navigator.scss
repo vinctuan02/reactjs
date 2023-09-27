@@ -14,6 +14,7 @@
         &:hover {
             cursor: pointer;
             background-color: darken($colormain, 5);
+            border-radius: 10px;
         }
 
         .menu-group-name {
@@ -34,13 +35,18 @@
             color: $text-in-light;
             position: absolute;
             padding: 0;
+            border-radius: 10px;
 
             .menu {
-                width: 205px;
+                // width: 205px;
                 padding: 0 15px;
                 height: 35px;
                 line-height: 35px;
                 text-transform: none;
+
+                &:hover {
+                    border-radius: 10px;
+                }
 
                 .menu-link {
                     text-decoration: none;
@@ -92,10 +98,12 @@
                 }
 
                 &:hover {
+                    // border-radius: 10px;
                     background-color: darken($bg-menu-color, 3);
 
                     .sub-menu-list {
                         display: block;
+                        border-radius: 10px;
                     }
                 }
 
@@ -111,6 +119,7 @@
         &:hover {
             .menu-list {
                 display: block;
+                // border-radius: 10px;
             }
         }
     }

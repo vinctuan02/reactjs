@@ -6,10 +6,10 @@ import './MedicalFacility.scss'
 
 class MedicalFacility extends Component {
 
-    render() {
+    render() { 
         return (
-            <div>
-                <div className='section-share section-medical-facility'>
+            // <div>
+            <div className='section-share section-medical-facility'>
                 <div className='section-container'>
                     <div className='section-header'>
                         <span className='title-section'>Cơ sở y tế nổi bật</span>
@@ -44,10 +44,9 @@ class MedicalFacility extends Component {
                             </div>
                         </Slider>
                     </div>
-
                 </div>
             </div>
-            </div>
+            // </div>
         );
     }
 

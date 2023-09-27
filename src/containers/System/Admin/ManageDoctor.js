@@ -7,7 +7,7 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select'
-import { LANGUAGES } from '../../../utils/constant';
+import { CRUD_ACTION, LANGUAGES } from '../../../utils/constant';
 import { getDetailInforDoctor } from '../../../services/userService';
 
 
@@ -58,13 +58,24 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log('this.state: ', this.state)
+        // console.log('this.state: ', this.state)
+        let { hasOldData } = this.state
         this.props.saveDetailInforDoctor({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
             doctorId: this.state.selectedDoctor.value,
             // specialtyId: this.state.specialtyId
+            action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE
+        })
+
+        this.setState({
+            contentMarkdown: '',
+            contentHTML: '',
+            selectedDoctor: '',
+            description: '',
+            // listDoctors: '',
+            hasOldData: false
         })
     }
 
@@ -72,7 +83,7 @@ class ManageDoctor extends Component {
         // console.log("hihihi")
         this.setState({ selectedDoctor });
         let res = await getDetailInforDoctor(selectedDoctor.value)
-        console.log("test res: ", res)
+        // console.log("test res: ", res)
         if (res && res.errCode === 0 && res.data && res.data.Markdown &&
             res.data.Markdown.contentHTML && res.data.Markdown.contentMarkdown &&
             res.data.Markdown.description) {

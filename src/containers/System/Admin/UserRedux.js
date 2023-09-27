@@ -69,6 +69,8 @@ class UserRedux extends Component {
             })
         }
 
+
+        // reset state
         if (prevProps.listUsers !== this.props.listUsers) {
             let arrGenders = this.props.genderRedux
             let arrPositions = this.props.positionRedux
@@ -129,7 +131,7 @@ class UserRedux extends Component {
         // console.log("handle user.role: ", this.state.role)
         let isValid = this.checkValidateInput()
         if (isValid === false) {
-            console.log("isValid === false")
+            // console.log("isValid === false")
             return
         }
 

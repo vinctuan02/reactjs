@@ -1,12 +1,22 @@
+.test {
+    display: block;
+    width: 100%;
+    border: solid 0.1px black;
+}
+
 .detail-doctor-container {
     // height: 500px;
-    border: 1px solid red;
+    // border: 1px solid red;
     margin: 0 100px;
     padding: 10px;
 
     .intro-doctor {
         display: flex;
         // height: 100px;
+        padding: 35px;
+        margin-top: 30px;
+        border-radius: 10px;
+        background-color: rgb(232, 232, 232);
 
         .content-left {
             // width: 20%;
@@ -47,5 +57,9 @@
                 font-weight: 500;
             }
         }
+    }
+
+    .detail-infor-doctor {
+        margin: 30px 30px;
     }
 }

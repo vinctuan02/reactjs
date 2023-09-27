@@ -32,12 +32,30 @@
 }
 
 .section-share {
+    margin: 10px;
+
     &.section-specialty {
-        background-color: #f5f5f5;
+        .section-container {
+            background-color: #e8e8e8;
+        }
+    }
+
+    &.section-medical-facility {
+        .section-container {
+            background-color: #f3f3f3;
+        }
     }
 
     &.section-outstanding-doctor {
-        background-color: #f5f5f5;
+        .section-container {
+            background-color: #e8e8e8;
+        }
+    }
+
+    &.section-handbook {
+        .section-container {
+            background-color: #f3f3f3;
+        }
     }
 
     &.section-about {
@@ -85,18 +103,21 @@
 }
 
 .section-share {
-    height: 330px;
+    // height: 330px;
     // margin: 0 50px;
 
     .section-container {
         margin: 0 50px;
         display: flex;
         flex-direction: column;
+        padding: 10px;
+        border-radius: 10px;
 
         .section-header {
-            height: 100px;
-            margin-bottom: 30px;
-            padding-top: 30px;
+            // height: 100px;
+            // margin-bottom: 30px;
+            // padding-top: 30px;
+            margin: 5px 0px 10px 0px;
 
             .title-section {
                 font-size: 22px;
