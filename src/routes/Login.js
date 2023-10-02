@@ -49,7 +49,7 @@ class Login extends Component {
     }
 
     processLogin = () => {
-        const { username, password } = this.state;
+        // const { username, password } = this.state;
 
         const { adminLoginSuccess, adminLoginFail } = this.props;
         let loginBody = {

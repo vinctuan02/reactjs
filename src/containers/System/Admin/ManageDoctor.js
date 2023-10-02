@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './ManageDoctor.scss'
 import * as action from '../../../store/actions'

@@ -11,10 +11,11 @@ import Home from '../routes/Home';
 // import Login from '../routes/Login';
 import Login from './Auth/Login';
 import System from '../routes/System';
-import { CustomToastCloseButton } from '../components/CustomToast';
+// import { CustomToastCloseButton } from '../components/CustomToast';
 import HomePage from './HomePage/HomePage.js'
-import ConfirmModal from '../components/ConfirmModal';
+// import ConfirmModal from '../components/ConfirmModal';
 import DetailDoctor from './Patient/Doctor/DetailDoctor';
+import Doctor from '../routes/Doctor';
 
 class App extends Component {
 
@@ -48,6 +49,7 @@ class App extends Component {
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                                    <Route path={'/doctor/manage-schedule'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                 </Switch>

@@ -1,34 +1,62 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash'
 
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
-import { adminMenu } from './menuApp';
+import { adminMenu, doctorMenu } from './menuApp';
 import './Header.scss';
 
 import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from '../../utils/constant';
+import { LANGUAGES, USER_ROLE } from '../../utils/constant';
 
 class Header extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            menuApp: []
+        }
+    }
 
     handleChangeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language)
     }
 
+    componentDidMount() {
+        // console.log("component mount")
+        let { userInfo } = this.props
+        let menu = []
+        if (userInfo && !_.isEmpty(userInfo)) {
+            let role = userInfo.roleId
+            if (role === USER_ROLE.ADMIN) {
+                menu = adminMenu
+            }
+            if (role === USER_ROLE.DOCTOR) {
+                menu = doctorMenu
+            }
+        }
+
+        this.setState({
+            menuApp: menu
+        })
+        // console.log("this.props.userInfor: ", this.props.userInfo)
+    }
+
     render() {
+        // console.log("render")
         const { processLogout, language, userInfo } = this.props;
         return (
             <div className="header-container">
                 {/* thanh navigator */}
                 <div className="header-tabs-container">
-                    <Navigator menus={adminMenu} />
+                    <Navigator menus={this.state.menuApp} />
                 </div>
 
                 {/* nút logout */}
 
                 <div className='languages'>
-                    <span className='welcom'><FormattedMessage id="homeheader.welcome" />,
-                        {userInfo && userInfo.firstname ? userInfo.firstname : ''}
+                    <span className='welcom'><FormattedMessage id="homeheader.welcome" />
+                        , {userInfo && userInfo.firstName ? userInfo.firstName : ''}
                     </span>
                     <span
                         className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}

@@ -243,7 +243,7 @@ export const fetchAllDoctor = () => {
             let res = await getAllDoctors()
             // console.log("fetch all user: ", res)
             if (res && res.errCode === 0) {
-                console.log("rest === 0", res.data)
+                // console.log("rest === 0", res.data)
                 dispatch(fetchAllDoctorSuccess(res.data))
             } else {
                 dispatch(fetchAllDoctorFailed())
@@ -267,7 +267,7 @@ export const saveDetailUser = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await saveDetailInforDoctor(data)
-            console.log("fetch all user: ", res)
+            // console.log("fetch all user: ", res)
             if (res && res.errCode === 0) {
                 // console.log("rest === 0", res.data)
                 toast.success("Save detail doctor success")
@@ -289,4 +289,31 @@ export const saveDetailUserSuccess = () => ({
 })
 export const saveDetailUserFail = () => ({
     type: actionTypes.SAVE_DETAIL_INFOR_DOCTOR_FAILED
+})
+
+
+export const fetchAllScheduleTime = (type) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService('TIME')
+            // console.log("fetch all user: ", res)
+            if (res && res.errCode === 0) {
+                // console.log("rest === 0", res.data)
+                dispatch(fetchAllScheduleTimeSuccess(res.data))
+            } else {
+                dispatch(fetchAllScheduleTimeFailed())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+}
+
+export const fetchAllScheduleTimeSuccess = (data) => ({
+    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+    dataTime: data,
+})
+export const fetchAllScheduleTimeFailed = () => ({
+    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED
 })

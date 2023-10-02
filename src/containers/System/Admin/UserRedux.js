@@ -217,7 +217,7 @@ class UserRedux extends Component {
         let positions = this.state.positionArr
         let roles = this.state.roleArr
 
-        console.log("state render ", this.state)
+        // console.log("state render ", this.state)
         return (
             <div className='user-redux-container'>
                 <div className='title'>User redux</div>
