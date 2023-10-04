@@ -4,6 +4,7 @@ import HomeHeader from '../../HomePage/HomeHeader';
 import './DetailDoctor.scss'
 import { getDetailInforDoctor } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
+import DoctorSchedule from './DoctorSchedule';
 
 class DetailDoctor extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class DetailDoctor extends Component {
 
     render() {
         // console.log(this.props.match.params.id)
-        console.log("this.state: ", this.state)
+        // console.log("this.state: ", this.state)
         let { detailDoctor } = this.state
         let { language } = this.props
         let nameVi = '', nameEn = ''
@@ -44,7 +45,6 @@ class DetailDoctor extends Component {
         return (
             <React.Fragment>
                 <HomeHeader />
-                <div className='test'></div>
                 <div className='detail-doctor-container'>
                     <div className='intro-doctor'>
                         <div className='content-left'>
@@ -68,7 +68,12 @@ class DetailDoctor extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className='schedule-doctor'></div>
+                    <div className='schedule-doctor'>
+                        <div className='content-left'>
+                            <DoctorSchedule />
+                        </div>
+                        <div className='content-right'></div>
+                    </div>
                     <div className='detail-infor-doctor'>
                         {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML &&
                             <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}>
