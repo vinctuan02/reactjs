@@ -89,6 +89,7 @@ class ManageSchedule extends Component {
     }
 
     handleClickBtnTime = (time) => {
+        console.log("Check tesst")
         console.log("time: ", time)
         let { rangeTime } = this.state
         if (rangeTime && rangeTime.length > 0) {
@@ -146,8 +147,13 @@ class ManageSchedule extends Component {
         let res = await saveBulkScheduleDoctor({
             arrSchedule: result
         })
-        console.log("res: ", res)
-        console.log('check result: ', result)
+        // console.log("res: ", res)
+        // console.log('check result: ', result)
+        if (res && res.errCode === 0) {
+            toast.success('Save scheduel success')
+        } else {
+            toast.error("Save scheduel failed ")
+        }
     }
 
     render() {
