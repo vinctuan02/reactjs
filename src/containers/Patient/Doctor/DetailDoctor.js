@@ -10,13 +10,17 @@ class DetailDoctor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            detailDoctor: {}
+            detailDoctor: {},
+            currentDoctorId: this.props.match.params.id
         }
     }
 
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id
+            // this.setState({
+            //     currentDoctorId: id
+            // })
             let res = await getDetailInforDoctor(id)
             // console.log("check res: ", res)
             if (res && res.errCode === 0) {
@@ -38,10 +42,12 @@ class DetailDoctor extends Component {
         let { detailDoctor } = this.state
         let { language } = this.props
         let nameVi = '', nameEn = ''
+
         if (detailDoctor && detailDoctor.positionData) {
             nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`
         }
+
         return (
             <React.Fragment>
                 <HomeHeader />
@@ -70,7 +76,9 @@ class DetailDoctor extends Component {
                     </div>
                     <div className='schedule-doctor'>
                         <div className='content-left'>
-                            <DoctorSchedule doctorId={detailDoctor && detailDoctor.id ? detailDoctor.id : -1} />
+                            {/* <DoctorSchedule doctorId={detailDoctor && detailDoctor.id ? detailDoctor.id : -1} /> */}
+                            <DoctorSchedule doctorId={this.state.currentDoctorId} />
+                            {/* currentDoctorId */}
                         </div>
                         <div className='content-right'></div>
                     </div>

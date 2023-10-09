@@ -15,17 +15,30 @@ class DetailDoctor extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setArrDays(this.props.language)
+    async componentDidMount() {
+        let { language } = this.props
+        let allDays = this.getArrDays(language)
+        console.log("this.props: ", this.props)
+        console.log('this.props.doctorid: ', this.props.doctorId)
+        if (allDays && allDays.length > 0) {
+            let res = await getScheduleDoctorByDate(this.props.doctorId, allDays[0].value)
+            this.setState({
+                allDays: allDays,
+                allAvailableTime: res.data ? res.data : []
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.language !== prevProps.language) {
-            this.setArrDays(this.props.language)
+            let allDays = this.getArrDays(this.props.language)
+            this.setState({
+                allDays: allDays
+            })
         }
     };
 
-    setArrDays = (language) => {
+    getArrDays = (language) => {
         let allDays = []
         for (let i = 0; i < 7; i++) {
             let object = {}
@@ -37,10 +50,8 @@ class DetailDoctor extends Component {
             object.value = moment(new Date()).add(i, 'days').startOf('day').valueOf()
             allDays.push(object)
         }
+        return allDays
         // console.log("Arr date: ", arrDate)
-        this.setState({
-            allDays: allDays
-        })
     }
 
     handleOnChangeSelect = async (event) => {
@@ -89,11 +100,16 @@ class DetailDoctor extends Component {
                                         let timeDisplay = language === LANGUAGES.VI ?
                                             item.timeTypeData.valueVi : item.timeTypeData.valueEn
                                         return (
-                                            <button key={index}>{timeDisplay}</button>
+                                            <button
+                                                className={language === LANGUAGES.VI ? 'btn-vi' : 'btn-en'}
+                                                key={index}>{timeDisplay}
+                                            </button>
                                         )
                                     })
                                     :
-                                    <div>Không có lịch hẹn trong khoảng thời gian này, vui lòng chọn thời gian khác!</div>
+                                    <div className='no-schedule'>
+                                        Không có lịch hẹn trong khoảng thời gian này, vui lòng chọn thời gian khác!
+                                    </div>
                             }
                         </div>
                     </div>
