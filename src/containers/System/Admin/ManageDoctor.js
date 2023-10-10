@@ -56,7 +56,7 @@ class ManageDoctor extends Component {
         }
 
         if (prevProps.language !== this.props.language) {
-            let dataSelect = this.buildDataInput(this.props.allDoctors)
+            let dataSelect = this.buildDataInput(this.props.allDoctors, 'USERS')
             this.setState({
                 listDoctors: dataSelect
             })
@@ -66,9 +66,9 @@ class ManageDoctor extends Component {
             // console.log('this.props.allRequiredDoctorInfor didUpdate: ', this.props.allRequiredDoctorInfor)
             let { resPayment, resPrice, resProvince } = this.props.allRequiredDoctorInfor
             // let dataSelectPrice = this.buildDataInput(this.props.allRequiredDoctorInfor)
-            let dataPaymentSelect = this.buildDataInput(resPayment)
-            let dataPriceSelect = this.buildDataInput(resPrice)
-            let dataProvinceSelect = this.buildDataInput(resProvince)
+            let dataPriceSelect = this.buildDataInput(resPrice, 'PRICE')
+            let dataPaymentSelect = this.buildDataInput(resPayment, 'PAYMENT')
+            let dataProvinceSelect = this.buildDataInput(resProvince, 'PROVINCE')
 
             this.setState({
                 listPrice: dataPriceSelect,
@@ -82,16 +82,31 @@ class ManageDoctor extends Component {
     buildDataInput = (dataInput, type) => {
         let result = []
         let { language } = this.props
-        dataInput.map((item, index) => {
-            let object = {}
-            let labelVi = type === 'USERS' ? `${item.lastName} ${item.firstName}` : item.valueVi
-            let labelEn = type === 'USERS' ? `${item.firstName} ${item.lastName}` : item.valueEn
+        if (type === 'USERS') {
+            dataInput.map((item, index) => {
+                let object = {}
+                let labelVi = `${item.lastName} ${item.firstName}`
+                let labelEn = `${item.firstName} ${item.lastName}`
 
-            object.label = language === LANGUAGES.VI ? labelVi : labelEn
-            object.value = item.id
-            result.push(object)
-            // return 0
-        })
+                object.label = language === LANGUAGES.VI ? labelVi : labelEn
+                object.value = item.id
+                result.push(object)
+                // return 0
+            })
+        }
+        if (type === 'PRICE' || type === 'PAYMENT' || type === 'PROVINCE') {
+            dataInput.map((item, index) => {
+                // console.log("item: ", item)
+                let object = {}
+                let labelVi = `${item.valueVi}`
+                let labelEn = `${item.valueEn}`
+                object.label = language === LANGUAGES.VI ? labelVi : labelEn
+                object.value = item.keyMap
+                // console.log("object: ", object)
+                result.push(object)
+                // return 0
+            })
+        }
         return result
     }
 
@@ -152,8 +167,16 @@ class ManageDoctor extends Component {
     };
 
     handleChangeSelectDoctorInfor = (selectOption, name) => {
-        console.log("selectOption: ", selectOption)
-        console.log("name: ", name)
+        // console.log("selectOption: ", selectOption)
+        // console.log("name: ", name)
+        let stateName = name.name
+        let stateCopy = { ...this.state }
+        stateCopy[stateName] = selectOption
+        // console.log("stateCopy: ", stateCopy)
+        this.setState({
+            ...stateCopy
+        })
+        // console.log("this.state: ", this.state)
     }
 
     handleOnChangeDesc = (event) => {
@@ -164,6 +187,7 @@ class ManageDoctor extends Component {
 
     render() {
         let { hasOldData } = this.state
+        // console.log("this.state render(): ", this.state)
         return (
             <React.Fragment>
                 <div className='manage-doctor-container'>
@@ -189,26 +213,31 @@ class ManageDoctor extends Component {
                         <div className='col-4 form-group'>
                             <label>Chọn giá</label>
                             <Select
-                                // value={this.state.selectedDoctor}
+                                value={this.state.selectedPrice}
                                 onChange={this.handleChangeSelectDoctorInfor}
                                 options={this.state.listPrice}
-                                name='selectPrice'
+                                name='selectedPrice'
+                                placeholder={'Giá khám'}
                             />
                         </div>
                         <div className='col-4 form-group'>
                             <label>Chọn phương thức thanh toán</label>
                             <Select
-                                // value={this.state.selectedDoctor}
+                                value={this.state.selectedPayment}
                                 onChange={this.handleChangeSelectDoctorInfor}
                                 options={this.state.listPayment}
+                                name='selectedPayment'
+                                placeholder={'Phương thức thanh toán'}
                             />
                         </div>
                         <div className='col-4 form-group'>
                             <label>Chọn tỉnh thành</label>
                             <Select
-                                // value={this.state.selectedDoctor}
+                                value={this.state.selectedProvince}
                                 onChange={this.handleChangeSelectDoctorInfor}
                                 options={this.state.listProvince}
+                                name='selectedProvince'
+                                placeholder={'Tỉnh thành'}
                             />
                         </div>
                         <div className='col-4 form-group'>
