@@ -141,7 +141,7 @@ const adminReducer = (state = initialState, action) => {
             }
 
         case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START:
-            console.log("fetch required doctor infor start : ")
+            // console.log("fetch required doctor infor start : ")
             return {
                 ...state,
             }
@@ -150,7 +150,7 @@ const adminReducer = (state = initialState, action) => {
             // console.log("adminReducer, case FETCH_ROLE_FAILED: ", action)
             // console.log("fetch all doctor success: ", action)
             state.allRequiredDoctorInfor = action.allRequiredData
-            console.log("fetch required doctor data action: ", action)
+            // console.log("fetch required doctor data action: ", action)
             return {
                 ...state,
             }

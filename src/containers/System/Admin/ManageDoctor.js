@@ -75,7 +75,7 @@ class ManageDoctor extends Component {
                 listPayment: dataPaymentSelect,
                 listProvince: dataProvinceSelect
             })
-            console.log("hi: ", dataPaymentSelect, dataPriceSelect, dataProvinceSelect)
+            // console.log("hi: ", dataPaymentSelect, dataPriceSelect, dataProvinceSelect)
         }
     }
 
@@ -151,6 +151,11 @@ class ManageDoctor extends Component {
         // console.log(`Option selected:`, selectedDoctor);
     };
 
+    handleChangeSelectDoctorInfor = (selectOption, name) => {
+        console.log("selectOption: ", selectOption)
+        console.log("name: ", name)
+    }
+
     handleOnChangeDesc = (event) => {
         this.setState({
             description: event.target.value
@@ -184,24 +189,25 @@ class ManageDoctor extends Component {
                         <div className='col-4 form-group'>
                             <label>Chọn giá</label>
                             <Select
-                                value={this.state.selectedDoctor}
-                                // onChange={this.handleChangeSelect}
+                                // value={this.state.selectedDoctor}
+                                onChange={this.handleChangeSelectDoctorInfor}
                                 options={this.state.listPrice}
+                                name='selectPrice'
                             />
                         </div>
                         <div className='col-4 form-group'>
                             <label>Chọn phương thức thanh toán</label>
                             <Select
-                                value={this.state.selectedDoctor}
-                                // onChange={this.handleChangeSelect}
+                                // value={this.state.selectedDoctor}
+                                onChange={this.handleChangeSelectDoctorInfor}
                                 options={this.state.listPayment}
                             />
                         </div>
                         <div className='col-4 form-group'>
                             <label>Chọn tỉnh thành</label>
                             <Select
-                                value={this.state.selectedDoctor}
-                                // onChange={this.handleChangeSelect}
+                                // value={this.state.selectedDoctor}
+                                onChange={this.handleChangeSelectDoctorInfor}
                                 options={this.state.listProvince}
                             />
                         </div>
