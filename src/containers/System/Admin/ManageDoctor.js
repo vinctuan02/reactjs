@@ -57,8 +57,16 @@ class ManageDoctor extends Component {
 
         if (prevProps.language !== this.props.language) {
             let dataSelect = this.buildDataInput(this.props.allDoctors, 'USERS')
+            let { resPayment, resPrice, resProvince } = this.props.allRequiredDoctorInfor
+            // let dataSelectPrice = this.buildDataInput(this.props.allRequiredDoctorInfor)
+            let dataPriceSelect = this.buildDataInput(resPrice, 'PRICE')
+            let dataPaymentSelect = this.buildDataInput(resPayment, 'PAYMENT')
+            let dataProvinceSelect = this.buildDataInput(resProvince, 'PROVINCE')
             this.setState({
-                listDoctors: dataSelect
+                listDoctors: dataSelect,
+                listPrice: dataPriceSelect,
+                listPayment: dataPaymentSelect,
+                listProvince: dataProvinceSelect
             })
         }
 
@@ -94,7 +102,21 @@ class ManageDoctor extends Component {
                 // return 0
             })
         }
-        if (type === 'PRICE' || type === 'PAYMENT' || type === 'PROVINCE') {
+        if (type === 'PRICE') {
+            dataInput.map((item, index) => {
+                // console.log("item: ", item)
+                let object = {}
+                let labelVi = `${item.valueVi}`
+                let labelEn = `${item.valueEn} USD`
+                object.label = language === LANGUAGES.VI ? labelVi : labelEn
+                object.value = item.keyMap
+                // console.log("object: ", object)
+                result.push(object)
+                // return 0
+            })
+        }
+
+        if (type === 'PAYMENT' || type === 'PROVINCE') {
             dataInput.map((item, index) => {
                 // console.log("item: ", item)
                 let object = {}
@@ -126,14 +148,21 @@ class ManageDoctor extends Component {
             description: this.state.description,
             doctorId: this.state.selectedDoctor.value,
             // specialtyId: this.state.specialtyId
-            action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE
+            action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE,
+
+            selectedPrice: this.state.selectedPrice.value,
+            selectedPayment: this.state.selectedPayment.value,
+            selectedProvince: this.state.selectedProvince.value,
+            nameClinic: this.state.nameClinic,
+            addressClinic: this.state.addressClinic,
+            note: this.state.note
         })
 
         this.setState({
-            contentMarkdown: '',
-            contentHTML: '',
-            selectedDoctor: '',
-            description: '',
+            // contentMarkdown: '',
+            // contentHTML: '',
+            // selectedDoctor: '',
+            // description: '',
             // listDoctors: '',
             hasOldData: false
         })
@@ -179,15 +208,17 @@ class ManageDoctor extends Component {
         // console.log("this.state: ", this.state)
     }
 
-    handleOnChangeDesc = (event) => {
+    handleOnChangeText = (event, id) => {
+        let stateCopy = { ...this.state }
+        stateCopy[id] = event.target.value
         this.setState({
-            description: event.target.value
+            ...stateCopy
         })
     }
 
     render() {
         let { hasOldData } = this.state
-        // console.log("this.state render(): ", this.state)
+        console.log("this.state render(): ", this.state)
         return (
             <React.Fragment>
                 <div className='manage-doctor-container'>
@@ -204,7 +235,7 @@ class ManageDoctor extends Component {
                         <div className='content-right'>
                             <lable>Thông tin giới thiệu</lable>
                             <textarea className='form-control' rows='4'
-                                onChange={(event) => this.handleOnChangeDesc(event)}
+                                onChange={(event) => this.handleOnChangeText(event, 'description')}
                                 value={this.state.description}>
                             </textarea>
                         </div>
@@ -242,15 +273,24 @@ class ManageDoctor extends Component {
                         </div>
                         <div className='col-4 form-group'>
                             <label>Tên phòng khám</label>
-                            <input className='form-control'></input>
+                            <input className='form-control'
+                                onChange={(event) => this.handleOnChangeText(event, 'nameClinic')}
+                                value={this.state.nameClinic}
+                            />
                         </div>
                         <div className='col-4 form-group'>
                             <label>Địa chỉ phòng khám</label>
-                            <input className='form-control'></input>
+                            <input className='form-control'
+                                onChange={(event) => this.handleOnChangeText(event, 'addressClinic')}
+                                value={this.state.addressClinic}
+                            />
                         </div>
                         <div className='col-4 form-group'>
                             <label>Note</label>
-                            <input className='form-control'></input>
+                            <input className='form-control'
+                                onChange={(event) => this.handleOnChangeText(event, 'note')}
+                                value={this.state.note}
+                            />
                         </div>
                     </div>
                     <MdEditor
@@ -274,7 +314,7 @@ class ManageDoctor extends Component {
                         Test
                     </button> */}
                 </div>
-            </React.Fragment>
+            </React.Fragment >
         );
     }
 
