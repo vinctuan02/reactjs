@@ -10,7 +10,7 @@ class About extends Component {
         return (
             <div className='section-share section-about'>
                 <div className='section-about-header'>
-                    Truyền thông nói gì về HoiDanIT
+                    Booking Care
                 </div>
                 <div className='section-about-content'>
                     <div className='content-left'>
@@ -23,9 +23,7 @@ class About extends Component {
                     </div>
                     <div className='content-right'>
                         <p>
-                            Không thể phủ nhận Liveaction One Piece thành công như hiện tại là nhờ vào sự giám sát của Eiichiro Oda - tác giả của manga gốc.
-                            Ông đã yêu cầu Netflix quay lại rất nhiều cảnh mà ông cho là không đạt. Bên cạnh đó, Oda còn đưa ra điều kiện, nhà sản xuất,
-                            biên kịch không đuợc đưa bất kỳ câu chuyện tình cảm lãng mạn hay mối quan hệ mập mờ nào giữa các thành viên trong băng Mũ Rơm khi lên phim.
+                            Khi có sức khỏe bạn có cả ngàn giấc mơ, nhưng khi không có sức khỏe thì bạn chỉ dám mơ ước duy nhất một điều, đó là sức khỏe. Chính vì thế, những câu slogan về sức khỏe ra đời nhằm thôi thúc ý thức của con người về việc chăm sóc sức khỏe.
                         </p>
                     </div>
                 </div>

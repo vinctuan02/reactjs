@@ -23,26 +23,26 @@ class Specialty extends Component {
                         <Slider {...this.props.settings}>
                             <div className='section-customize'>
                                 <div className='bg-image section-specialty'></div>
-                                <div>Cơ xương khớp 1</div>
+                                <div>Cơ xương khớp</div>
                             </div>
                             <div className='section-customize'>
-                                <div className='bg-image section-specialty'></div>
-                                <div>Cơ xương khớp 1</div>
+                                <div className='bg-image section-specialty2'></div>
+                                <div>Cơ xương thần kinh</div>
                             </div>
                             <div className='section-customize'>
-                                <div className='bg-image section-specialty'></div>
-                                <div>Cơ xương khớp 1</div>
+                                <div className='bg-image section-specialty3'></div>
+                                <div>Cơ xương tiêu hoá</div>
                             </div>
                             <div className='section-customize'>
-                                <div className='bg-image section-specialty'></div>
-                                <div>Cơ xương khớp 1</div>
+                                <div className='bg-image section-specialty4'></div>
+                                <div>Cơ xương tim mạch</div>
                             </div>
                             <div className='section-customize'>
-                                <div className='bg-image section-specialty'></div>
-                                <div>Cơ xương khớp 1</div>
+                                <div className='bg-image section-specialty2'></div>
+                                <div>Cơ xương tai mũi họng</div>
                             </div>
                             <div className='section-customize'>
-                                <div className='bg-image section-specialty'></div>
+                                <div className='bg-image section-specialty3'></div>
                                 <div>Cơ xương khớp 1</div>
                             </div>
                         </Slider>

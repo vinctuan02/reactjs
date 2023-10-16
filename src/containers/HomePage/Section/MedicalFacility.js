@@ -6,7 +6,7 @@ import './MedicalFacility.scss'
 
 class MedicalFacility extends Component {
 
-    render() { 
+    render() {
         return (
             // <div>
             <div className='section-share section-medical-facility'>
@@ -20,27 +20,27 @@ class MedicalFacility extends Component {
                         <Slider {...this.props.settings}>
                             <div className='section-customize'>
                                 <div className='bg-image section-medical-facility'></div>
-                                <div>Hệ thống Y tế Thu Cúc 1</div>
+                                <div>Hệ thống Y tế Thu Cúc </div>
                             </div>
                             <div className='section-customize'>
                                 <div className='bg-image section-medical-facility'></div>
-                                <div>Hệ thống Y tế Thu Cúc 1</div>
+                                <div>Hệ thống Y tế Bạch Mai</div>
                             </div>
                             <div className='section-customize'>
                                 <div className='bg-image section-medical-facility'></div>
-                                <div>Hệ thống Y tế Thu Cúc 1</div>
+                                <div>Hệ thống Y tế Nam Cường</div>
                             </div>
                             <div className='section-customize'>
                                 <div className='bg-image section-medical-facility'></div>
-                                <div>Hệ thống Y tế Thu Cúc 1</div>
+                                <div>Hệ thống Y tế Thu Vesta</div>
                             </div>
                             <div className='section-customize'>
                                 <div className='bg-image section-medical-facility'></div>
-                                <div>Hệ thống Y tế Thu Cúc 1</div>
+                                <div>Hệ thống Y tế Yên Nghĩa</div>
                             </div>
                             <div className='section-customize'>
                                 <div className='bg-image section-medical-facility'></div>
-                                <div>Hệ thống Y tế Thu Cúc 1</div>
+                                <div>Hệ thống Y tế Hải Phòng</div>
                             </div>
                         </Slider>
                     </div>
