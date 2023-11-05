@@ -178,11 +178,21 @@ class ManageDoctor extends Component {
             res.data.Markdown.description) {
 
             let markdown = res.data.Markdown
+            let Doctor_Infor = res.data.Doctor_Infor
+            console.log("Test: ", Doctor_Infor)
+            console.log("List price: ", this.state.listPrice)
             this.setState({
                 contentHTML: markdown.contentHTML,
                 contentMarkdown: markdown.contentMarkdown,
                 description: markdown.description,
-                hasOldData: true
+                hasOldData: true,
+
+                selectedPrice: '',
+                selectedPayment: '',
+                selectedProvince: '',
+                nameClinic: Doctor_Infor.nameClinic,
+                addressClinic: Doctor_Infor.addressClinic,
+                note: Doctor_Infor.note
             })
         } else {
             this.setState({
@@ -218,14 +228,14 @@ class ManageDoctor extends Component {
 
     render() {
         let { hasOldData } = this.state
-        console.log("this.state render(): ", this.state)
+        // console.log("this.state render(): ", this.state)
         return (
             <React.Fragment>
                 <div className='manage-doctor-container'>
                     <div className='manage-doctor-title'>Manage Doctor</div>
                     <div className='more-infor'>
                         <div className='content-left form-group'>
-                            <label>Chọn bác sĩ </label>
+                            <label>Chọn bác sĩ</label>
                             <Select
                                 value={this.state.selectedDoctor}
                                 onChange={this.handleChangeSelect}
