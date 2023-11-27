@@ -178,9 +178,19 @@ class ManageDoctor extends Component {
             res.data.Markdown.description) {
 
             let markdown = res.data.Markdown
+
+            // let addressClinic = '', nameClinic = '', note = ''
+            // if(res.data.Doctor_Infor){
+            //     addressClinic = res.data.Doctor_Infor.addressClinic
+            //     nameClinic = res.data.Doctor_Infor.nameClinic
+            //     note = res.data.Doctor_Infor.note
+
+            // }
+
             let Doctor_Infor = res.data.Doctor_Infor
-            console.log("Test: ", Doctor_Infor)
-            console.log("List price: ", this.state.listPrice)
+            // console.log("Test: ", Doctor_Infor)
+            // console.log("List price: ", this.state.listPrice)
+
             this.setState({
                 contentHTML: markdown.contentHTML,
                 contentMarkdown: markdown.contentMarkdown,
@@ -199,7 +209,10 @@ class ManageDoctor extends Component {
                 contentHTML: '',
                 contentMarkdown: '',
                 description: '',
-                hasOldData: false
+                hasOldData: false,
+                nameClinic: '',
+                addressClinic: '',
+                note: ''
             })
         }
         // console.log(`Option selected:`, selectedDoctor);
